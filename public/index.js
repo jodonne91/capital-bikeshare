@@ -134,3 +134,46 @@ var recentStations = function(callback) {
     }
   })
 }
+
+
+
+/*take current position and find closest stand*/
+
+var closestStation = function(callback){
+
+  var x1, y1;
+
+  var storeLocation = function(data){
+      x1 = data.coords.latitude;
+      y1 = data.coords.longitude;
+
+      $.ajax({
+      url: "/stations",
+      method: "GET",
+      success: function(data){
+
+        var sorted = _.sortBy(data, function(point)
+          {
+            var x2 = point.latitude;
+            var y2 = point.longitude;
+
+
+            var distance = Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1));
+
+            console.log(distance);
+
+            return distance;
+        })
+
+
+
+        callback(sorted[0]);
+
+      }
+
+    })
+  }
+
+  navigator.geolocation.getCurrentPosition(storeLocation);
+
+}

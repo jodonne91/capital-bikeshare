@@ -65,4 +65,16 @@ describe("Capital Bikeshare System Data", function(){
     })
   })
 
+  describe("Closest by geoposition", function(){
+    it("should find closest stand by use of geolocation", function(testDone){
+
+      closestStation(function(data){
+        expect(data.name).to.equal("23rd & Crystal Dr")
+        testDone()
+      })
+
+    })
+  })
+
+
 })
